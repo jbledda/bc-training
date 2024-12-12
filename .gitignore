@@ -1,0 +1,13 @@
+fabric-samples
+network-builder/organizations/*
+!network-builder/organizations/fabric-ca
+network-builder/organizations/fabric-ca/*
+!network-builder/organizations/fabric-ca/registerEnroll.sh
+!network-builder/organizations/*.sh
+!network-builder/organizations/*.json
+!network-builder/organizations/*.yaml
+network-builder/system-genesis-block/*
+network-builder/compose
+bin
+config
+network-builder/export
