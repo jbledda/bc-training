@@ -134,7 +134,7 @@ function createOrgs() {
   # Create crypto material using Fabric CA
   
   infoln "Generating certificates using Fabric CA"
-  ${CONTAINER_CLI_COMPOSE} -f compose/$COMPOSE_FILE_CA -f compose/$CONTAINER_CLI/${CONTAINER_CLI}-$COMPOSE_FILE_CA up -d 2>&1
+  ${CONTAINER_CLI_COMPOSE} -f compose/$COMPOSE_FILE_CA up -d 2>&1
 
   . organizations/fabric-ca/registerEnroll.sh
 
@@ -196,8 +196,8 @@ function networkUp() {
   fi
 
   if [ "$DEPLOY_PEER" == "yes" ]; then
-    COMPOSE_PEER_FILES="-f compose/${COMPOSE_FILE_PEER} -f compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_PEER}"
-    COMPOSE_PEER_FILES="${COMPOSE_PEER_FILES} -f compose/${COMPOSE_FILE_COUCH} -f compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_COUCH}"
+    COMPOSE_PEER_FILES="-f compose/${COMPOSE_FILE_PEER}"
+    COMPOSE_PEER_FILES="${COMPOSE_PEER_FILES} -f compose/${COMPOSE_FILE_COUCH}"
   else
     COMPOSE_PEER_FILES=""
   fi
@@ -222,10 +222,10 @@ function networkUp() {
 # Tear down running network
 function networkDown() {
   local temp_compose=$COMPOSE_FILE_PEER
-  COMPOSE_PEER_FILES="-f compose/${COMPOSE_FILE_PEER} -f compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_PEER}"
+  COMPOSE_PEER_FILES="-f compose/${COMPOSE_FILE_PEER}"
   COMPOSE_ORDERER_FILES="-f compose/${COMPOSE_FILE_ORDERER}"
-  COMPOSE_COUCH_FILES="-f compose/${COMPOSE_FILE_COUCH} -f compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_COUCH}"
-  COMPOSE_CA_FILES="-f compose/${COMPOSE_FILE_CA} -f compose/${CONTAINER_CLI}/${CONTAINER_CLI}-${COMPOSE_FILE_CA}"
+  COMPOSE_COUCH_FILES="-f compose/${COMPOSE_FILE_COUCH}"
+  COMPOSE_CA_FILES="-f compose/${COMPOSE_FILE_CA}"
   COMPOSE_FILES="${COMPOSE_PEER_FILES} ${COMPOSE_ORDERER_FILES} ${COMPOSE_COUCH_FILES} ${COMPOSE_CA_FILES}"
 
   if [ "${CONTAINER_CLI}" == "docker" ]; then
